@@ -25,6 +25,11 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
     }
   };
 
+  // Determine border color based on the card back color
+  const getBorderColor = () => {
+    return cardBackColor === 'game-red' ? 'border-game-red' : 'border-game-blue';
+  };
+
   return (
     <div 
       className={cn(
@@ -46,36 +51,57 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
         <div 
           className={cn(
             "game-card-front flex items-center justify-center rounded-xl",
-            `bg-${cardBackColor} border border-white/30 shadow-lg`
+            `bg-${cardBackColor}/80 border-2 ${getBorderColor()} shadow-lg`,
+            "overflow-hidden"
           )}
         >
-          <motion.div 
-            className="text-white/80 text-4xl font-bold"
-            animate={{ opacity: [0.7, 0.9, 0.7] }}
-            transition={{ 
-              duration: 2.5,
-              repeat: Infinity,
-              repeatType: "reverse"
-            }}
-          >
-            ?
-          </motion.div>
+          <div className="relative w-full h-full flex items-center justify-center">
+            {/* Diamond Background Image */}
+            <img 
+              src="/lovable-uploads/900fc825-c954-46ce-b595-7b5b697ff27e.png" 
+              alt="Diamond" 
+              className="absolute w-3/4 h-3/4 object-contain opacity-20"
+            />
+            <motion.div 
+              className="text-white/90 text-4xl font-bold relative z-10"
+              animate={{ opacity: [0.7, 0.9, 0.7] }}
+              transition={{ 
+                duration: 2.5,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
+            >
+              ?
+            </motion.div>
+          </div>
         </div>
         
         {/* Card Front */}
-        <div className="game-card-back bg-white/90 backdrop-blur-sm rounded-xl border border-white/30 flex items-center justify-center shadow-lg">
-          <motion.span 
-            className="text-5xl"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={isFlipped ? { 
-              scale: 1, 
-              opacity: 1,
-              rotate: [0, 5, 0, -5, 0] 
-            } : { scale: 0, opacity: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-          >
-            {card.emoji}
-          </motion.span>
+        <div className={cn(
+          "game-card-back bg-white/90 backdrop-blur-sm rounded-xl border-2",
+          getBorderColor(),
+          "flex items-center justify-center shadow-lg overflow-hidden"
+        )}>
+          <div className="relative w-full h-full flex items-center justify-center">
+            {/* Diamond Background Image */}
+            <img 
+              src="/lovable-uploads/900fc825-c954-46ce-b595-7b5b697ff27e.png" 
+              alt="Diamond" 
+              className="absolute w-full h-full object-contain opacity-10"
+            />
+            <motion.span 
+              className="text-5xl relative z-10"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={isFlipped ? { 
+                scale: 1, 
+                opacity: 1,
+                rotate: [0, 5, 0, -5, 0] 
+              } : { scale: 0, opacity: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+            >
+              {card.emoji}
+            </motion.span>
+          </div>
         </div>
       </motion.div>
     </div>
