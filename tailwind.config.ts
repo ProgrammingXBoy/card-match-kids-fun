@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,15 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Game specific colors
+				game: {
+					'blue': '#4A9DFF',
+					'red': '#FF6B6B',
+					'yellow': '#FFD93D',
+					'green': '#6BCB77',
+					'purple': '#9B72CF',
+					'pink': '#FF9EAA'
 				}
 			},
 			borderRadius: {
@@ -84,11 +94,29 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'flip': {
+					'0%, 100%': { transform: 'rotateY(0deg)' },
+					'50%': { transform: 'rotateY(180deg)' }
+				},
+				'bounce-custom': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-15px)' }
+				},
+				'celebrate': {
+					'0%': { transform: 'scale(1) rotate(0deg)' },
+					'25%': { transform: 'scale(1.2) rotate(5deg)' },
+					'50%': { transform: 'scale(1) rotate(0deg)' },
+					'75%': { transform: 'scale(1.2) rotate(-5deg)' },
+					'100%': { transform: 'scale(1) rotate(0deg)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'flip': 'flip 0.5s ease-in-out',
+				'bounce-custom': 'bounce-custom 0.8s ease-in-out',
+				'celebrate': 'celebrate 1s ease-in-out'
 			}
 		}
 	},
