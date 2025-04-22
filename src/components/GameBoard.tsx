@@ -72,7 +72,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
       { id: 2, name: 'Player 2', color: PLAYER_COLORS[2], score: 0 },
     ]);
 
-    setCardBackColor(cardBackColors[Math.floor(Math.random() * cardBackColors.length)]);
+    setCardBackColor('game-red');
   }, [difficulty]);
 
   const handleCardClick = (card: CardType) => {
@@ -108,7 +108,6 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
         setTimeout(() => {
           setFlipped([]);
           setIsDisabled(false);
-          setCurrentPlayer(prev => prev === 1 ? 2 : 1);
           setShowTurnAnimation(true);
           setTimeout(() => setShowTurnAnimation(false), 1500);
         }, 1000);
@@ -116,7 +115,9 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
         setTimeout(() => {
           setFlipped([]);
           setIsDisabled(false);
-          setCurrentPlayer(prev => prev === 1 ? 2 : 1);
+          const nextPlayer = currentPlayer === 1 ? 2 : 1;
+          setCurrentPlayer(nextPlayer);
+          setCardBackColor(nextPlayer === 1 ? 'game-red' : 'game-blue');
           setShowTurnAnimation(true);
           setTimeout(() => setShowTurnAnimation(false), 1500);
         }, 1000);
@@ -164,7 +165,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
     : 0;
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-4xl mx-auto px-2">
       <AnimatePresence>
         {showTurnAnimation && (
           <motion.div 

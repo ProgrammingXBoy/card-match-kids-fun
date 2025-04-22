@@ -39,6 +39,8 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
         initial={{ rotateY: 0 }}
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
+        whileHover={!isFlipped && !isDisabled ? { scale: 1.05 } : {}}
+        whileTap={!isFlipped && !isDisabled ? { scale: 0.95 } : {}}
       >
         {/* Card Back (Pattern) */}
         <div 
@@ -47,12 +49,29 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
             `bg-${cardBackColor} border-4 border-white shadow-lg`
           )}
         >
-          <div className="text-white text-5xl font-bold">?</div>
+          <motion.div 
+            className="text-white text-5xl font-bold"
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "reverse"
+            }}
+          >
+            ?
+          </motion.div>
         </div>
         
         {/* Card Front (Animal) */}
         <div className="game-card-back bg-white rounded-xl border-4 border-game-yellow flex items-center justify-center shadow-lg">
-          <span className="text-6xl">{card.emoji}</span>
+          <motion.span 
+            className="text-6xl"
+            initial={{ scale: 0 }}
+            animate={isFlipped ? { scale: 1, rotate: [0, 10, 0, -10, 0] } : { scale: 0 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+          >
+            {card.emoji}
+          </motion.span>
         </div>
       </motion.div>
     </div>
