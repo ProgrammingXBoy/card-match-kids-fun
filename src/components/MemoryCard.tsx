@@ -38,7 +38,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
         className="game-card-inner"
         initial={{ rotateY: 0 }}
         animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.5, ease: "easeOutExpo" }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
         whileHover={!isFlipped && !isDisabled ? { scale: 1.03 } : {}}
         whileTap={!isFlipped && !isDisabled ? { scale: 0.97 } : {}}
       >
