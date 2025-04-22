@@ -7,7 +7,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface GameBoardProps {
@@ -165,32 +164,32 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
     : 0;
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-2">
+    <div className="w-full max-w-4xl mx-auto px-3">
       <AnimatePresence>
         {showTurnAnimation && (
           <motion.div 
-            className="fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-sm pointer-events-none"
+            className="fixed inset-0 flex items-center justify-center z-50 bg-black/20 backdrop-blur-sm pointer-events-none"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
             <motion.div
-              className={`text-5xl md:text-7xl font-bold text-${activePlayer.color} text-center`}
+              className={`text-4xl md:text-6xl font-bold text-${activePlayer.color} text-center`}
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 1.5, opacity: 0 }}
               transition={{ duration: 0.5 }}
             >
-              {activePlayer.name}'s Turn!
+              {activePlayer.name}'s Turn
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card className="bg-black/5 backdrop-blur-sm border-white/20 shadow-lg">
-          <CardContent className="p-4">
+      <div className="mb-5 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <Card className="bg-black/5 backdrop-blur-sm border-white/20 shadow-md">
+          <CardContent className="p-3">
             <div className="flex justify-between items-center">
               {players.map((player) => (
                 <div 
@@ -198,13 +197,13 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
                   className={cn(
                     "flex-1 p-2 rounded-lg transition-all",
                     currentPlayer === player.id 
-                      ? `bg-${player.color}/10 border-l-4 border-${player.color} shadow-md` 
-                      : "opacity-70"
+                      ? `bg-${player.color}/10 border-l-2 border-${player.color} shadow-sm` 
+                      : "opacity-60"
                   )}
                 >
                   <div className="text-center">
-                    <h3 className={`font-bold text-${player.color}`}>{player.name}</h3>
-                    <div className="text-xl font-bold">{player.score}</div>
+                    <h3 className={`font-medium text-${player.color}`}>{player.name}</h3>
+                    <div className="text-lg font-bold">{player.score}</div>
                   </div>
                 </div>
               ))}
@@ -212,39 +211,39 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
           </CardContent>
         </Card>
         
-        <Card className="bg-black/5 backdrop-blur-sm border-white/20 shadow-lg">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-center mb-2">
-              <div>Moves: <span className="font-bold">{moves}</span></div>
-              <div>
-                Matches: <span className="font-bold">{matched.length / 2} / {cards.length / 2}</span>
+        <Card className="bg-black/5 backdrop-blur-sm border-white/20 shadow-md">
+          <CardContent className="p-3">
+            <div className="flex justify-between items-center mb-1">
+              <div>Moves: <span className="font-medium">{moves}</span></div>
+              <div className="text-sm">
+                {matched.length / 2} / {cards.length / 2}
               </div>
             </div>
-            <Progress value={progressPercentage} className="h-2" />
+            <Progress value={progressPercentage} className="h-1.5" />
           </CardContent>
         </Card>
       </div>
       
       <motion.div 
-        className={`mb-4 text-center text-lg font-bold text-${activePlayer.color}`}
-        initial={{ opacity: 0, y: -10 }}
+        className={`mb-3 text-center text-sm font-medium text-${activePlayer.color}`}
+        initial={{ opacity: 0, y: -5 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
         <div className="flex items-center justify-center gap-2">
-          <span className={`inline-block w-3 h-3 rounded-full bg-${activePlayer.color} animate-pulse`}></span>
+          <span className={`inline-block w-2 h-2 rounded-full bg-${activePlayer.color} animate-pulse`}></span>
           {activePlayer.name}'s Turn
         </div>
       </motion.div>
       
       <motion.div 
-        className="w-full overflow-hidden rounded-xl bg-black/5 backdrop-blur-md p-3 md:p-4 border border-white/10 shadow-xl"
-        initial={{ opacity: 0, y: 20 }}
+        className="w-full overflow-hidden rounded-lg bg-black/5 backdrop-blur-md p-3 border border-white/10 shadow-md"
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.4 }}
       >
         <div
-          className="grid gap-2 md:gap-4"
+          className="grid gap-2 md:gap-3"
           style={{ 
             gridTemplateColumns: `repeat(${getGridCols()}, minmax(0, 1fr))` 
           }}

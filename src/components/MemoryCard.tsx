@@ -38,22 +38,22 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
         className="game-card-inner"
         initial={{ rotateY: 0 }}
         animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.5, ease: "easeInOut" }}
-        whileHover={!isFlipped && !isDisabled ? { scale: 1.05 } : {}}
-        whileTap={!isFlipped && !isDisabled ? { scale: 0.95 } : {}}
+        transition={{ duration: 0.5, ease: "easeOutExpo" }}
+        whileHover={!isFlipped && !isDisabled ? { scale: 1.03 } : {}}
+        whileTap={!isFlipped && !isDisabled ? { scale: 0.97 } : {}}
       >
-        {/* Card Back (Pattern) */}
+        {/* Card Back */}
         <div 
           className={cn(
             "game-card-front flex items-center justify-center rounded-xl",
-            `bg-${cardBackColor} border-4 border-white shadow-lg`
+            `bg-${cardBackColor} border border-white/30 shadow-lg`
           )}
         >
           <motion.div 
-            className="text-white text-5xl font-bold"
-            animate={{ scale: [1, 1.2, 1] }}
+            className="text-white/80 text-4xl font-bold"
+            animate={{ opacity: [0.7, 0.9, 0.7] }}
             transition={{ 
-              duration: 2,
+              duration: 2.5,
               repeat: Infinity,
               repeatType: "reverse"
             }}
@@ -62,13 +62,17 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
           </motion.div>
         </div>
         
-        {/* Card Front (Animal) */}
-        <div className="game-card-back bg-white rounded-xl border-4 border-game-yellow flex items-center justify-center shadow-lg">
+        {/* Card Front */}
+        <div className="game-card-back bg-white/90 backdrop-blur-sm rounded-xl border border-white/30 flex items-center justify-center shadow-lg">
           <motion.span 
-            className="text-6xl"
-            initial={{ scale: 0 }}
-            animate={isFlipped ? { scale: 1, rotate: [0, 10, 0, -10, 0] } : { scale: 0 }}
-            transition={{ duration: 0.3, delay: 0.2 }}
+            className="text-5xl"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={isFlipped ? { 
+              scale: 1, 
+              opacity: 1,
+              rotate: [0, 5, 0, -5, 0] 
+            } : { scale: 0, opacity: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
           >
             {card.emoji}
           </motion.span>

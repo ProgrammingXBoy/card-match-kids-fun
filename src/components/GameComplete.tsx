@@ -50,30 +50,22 @@ const GameComplete: React.FC<GameCompleteProps> = ({
     runConfetti();
   }, []);
 
-  // Messages based on performance
-  const getMessage = () => {
-    if (moves <= 10) return "Amazing memory!";
-    if (moves <= 15) return "Great job!";
-    if (moves <= 20) return "Well done!";
-    return "Good effort!";
-  };
-
   return (
     <motion.div 
-      className="max-w-md mx-auto"
-      initial={{ scale: 0.8, opacity: 0 }}
+      className="max-w-xs mx-auto"
+      initial={{ scale: 0.9, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.4 }}
     >
-      <Card className="backdrop-blur-lg bg-white/10 border-white/20 shadow-xl overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-game-blue/20 via-game-purple/20 to-game-pink/20 z-0"></div>
+      <Card className="backdrop-blur-lg bg-white/5 border-white/10 shadow-md overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-game-blue/10 via-game-purple/10 to-game-pink/10 z-0"></div>
         
-        <CardContent className="p-6 md:p-8 relative z-10">
+        <CardContent className="p-5 relative z-10">
           <motion.div 
-            className="text-6xl mb-4 mx-auto w-20 h-20 flex items-center justify-center"
+            className="text-5xl mb-3 mx-auto w-16 h-16 flex items-center justify-center"
             animate={{ 
-              rotate: [0, 10, -10, 10, 0],
-              scale: [1, 1.2, 1, 1.2, 1]
+              rotate: [0, 5, -5, 5, 0],
+              scale: [1, 1.1, 1, 1.1, 1]
             }}
             transition={{ 
               duration: 2, 
@@ -85,57 +77,55 @@ const GameComplete: React.FC<GameCompleteProps> = ({
           </motion.div>
           
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.2 }}
           >
-            <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-game-blue via-game-purple to-game-pink bg-clip-text text-transparent text-center">
-              Game Complete!
+            <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-game-blue via-game-purple to-game-pink bg-clip-text text-transparent text-center">
+              Game Complete
             </h2>
             
             <motion.div
-              className="text-xl mb-6 font-semibold text-center"
+              className="text-lg mb-4 font-medium text-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.3 }}
             >
               {winner}
             </motion.div>
             
-            <div className="bg-black/5 rounded-lg p-4 mb-6">
-              <div className="grid grid-cols-2 gap-4 text-center">
+            <div className="bg-black/5 rounded p-3 mb-4">
+              <div className="grid grid-cols-2 gap-3 text-center">
                 <div>
-                  <p className="text-sm text-gray-500">Total Score</p>
-                  <p className="text-2xl font-bold">{score}</p>
+                  <p className="text-xs text-gray-500">Score</p>
+                  <p className="text-xl font-bold">{score}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Total Moves</p>
-                  <p className="text-2xl font-bold">{moves}</p>
+                  <p className="text-xs text-gray-500">Moves</p>
+                  <p className="text-xl font-bold">{moves}</p>
                 </div>
               </div>
             </div>
           </motion.div>
           
           <motion.div 
-            className="flex flex-col md:flex-row gap-3 justify-center"
-            initial={{ opacity: 0, y: 20 }}
+            className="flex flex-col gap-2 justify-center"
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
+            transition={{ delay: 0.4 }}
           >
             <Button 
               variant="default"
-              size="lg"
               onClick={onPlayAgain}
-              className="bg-game-green hover:bg-game-green/90 text-white text-lg py-6 shadow-lg shadow-game-green/20"
+              className="bg-game-green hover:bg-game-green/90 text-white shadow-sm"
             >
               Play Again
             </Button>
             
             <Button
               variant="outline"
-              size="lg"
               onClick={onChangeDifficulty}
-              className="border-game-blue text-game-blue hover:bg-game-blue/10 text-lg py-6"
+              className="border-game-blue text-game-blue hover:bg-game-blue/5"
             >
               Change Difficulty
             </Button>
