@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import MemoryCard from './MemoryCard';
 import { CardType, cardPairs, Player, PLAYER_COLORS } from '@/data/cardImages';
@@ -9,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface GameBoardProps {
   difficulty: 'easy' | 'medium' | 'hard';
@@ -23,17 +23,14 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
   const [isDisabled, setIsDisabled] = useState(false);
   const isMobile = useIsMobile();
   
-  // Two player game state
   const [currentPlayer, setCurrentPlayer] = useState<1 | 2>(1);
   const [players, setPlayers] = useState<Player[]>([
     { id: 1, name: 'Player 1', color: PLAYER_COLORS[1], score: 0 },
     { id: 2, name: 'Player 2', color: PLAYER_COLORS[2], score: 0 },
   ]);
   
-  // Futuristic UI animation state
   const [showTurnAnimation, setShowTurnAnimation] = useState(false);
 
-  // Set number of card pairs based on difficulty
   const getPairsCount = () => {
     switch(difficulty) {
       case 'easy': return 6;
@@ -43,7 +40,6 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
     }
   };
 
-  // Random card colors for the back of the cards
   const cardBackColors = [
     'game-blue',
     'game-red',
@@ -53,23 +49,18 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
   ];
   const [cardBackColor, setCardBackColor] = useState(cardBackColors[0]);
 
-  // Initialize game
   useEffect(() => {
-    // Shuffle and select random card pairs based on difficulty
     const numPairs = getPairsCount();
     const shuffledPairs = [...cardPairs].sort(() => Math.random() - 0.5).slice(0, numPairs);
     
-    // Double the cards and assign IDs
     const gameCards = [...shuffledPairs, ...shuffledPairs].map((card, index) => ({
       ...card,
       id: index,
       matched: false
     }));
     
-    // Shuffle the final deck
     const shuffledCards = gameCards.sort(() => Math.random() - 0.5);
     
-    // Reset game state
     setCards(shuffledCards);
     setFlipped([]);
     setMatched([]);
@@ -81,19 +72,14 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
       { id: 2, name: 'Player 2', color: PLAYER_COLORS[2], score: 0 },
     ]);
 
-    // Random card back color
     setCardBackColor(cardBackColors[Math.floor(Math.random() * cardBackColors.length)]);
   }, [difficulty]);
 
-  // Handle card click
   const handleCardClick = (card: CardType) => {
-    // Prevent clicking when two cards are already flipped
     if (isDisabled || flipped.length === 2) return;
     
-    // Update flipped state
     setFlipped(prev => [...prev, card.id]);
     
-    // Check for a match when second card is flipped
     if (flipped.length === 1) {
       setMoves(prev => prev + 1);
       const firstCardId = flipped[0];
@@ -102,11 +88,9 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
       
       setIsDisabled(true);
       
-      // If cards match
       if (firstCard && firstCard.name === secondCard.name) {
         setMatched(prev => [...prev, firstCardId, secondCard.id]);
         
-        // Update current player's score
         setPlayers(prevPlayers => 
           prevPlayers.map(player => 
             player.id === currentPlayer
@@ -115,7 +99,6 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
           )
         );
         
-        // Show match toast with player color
         const currentPlayerColor = players.find(p => p.id === currentPlayer)?.color || 'game-blue';
         toast("Match found!", {
           description: `Player ${currentPlayer} found a match! 🎉`,
@@ -125,31 +108,25 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
         setTimeout(() => {
           setFlipped([]);
           setIsDisabled(false);
-          // Same player continues if they found a match
+          setCurrentPlayer(prev => prev === 1 ? 2 : 1);
+          setShowTurnAnimation(true);
+          setTimeout(() => setShowTurnAnimation(false), 1500);
         }, 1000);
       } else {
-        // If cards don't match, flip them back and switch players
         setTimeout(() => {
           setFlipped([]);
           setIsDisabled(false);
-          
-          // Switch to other player
           setCurrentPlayer(prev => prev === 1 ? 2 : 1);
-          
-          // Show player turn change animation
           setShowTurnAnimation(true);
           setTimeout(() => setShowTurnAnimation(false), 1500);
-          
         }, 1000);
       }
     }
   };
 
-  // Check if game is complete
   useEffect(() => {
     if (matched.length > 0 && matched.length === cards.length) {
       setTimeout(() => {
-        // Determine winner
         const player1 = players.find(p => p.id === 1);
         const player2 = players.find(p => p.id === 2);
         let winner = "It's a tie!";
@@ -162,14 +139,12 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
           }
         }
         
-        // Calculate total score
         const totalScore = (matched.length / 2) * 100;
         onGameComplete(totalScore, moves, winner);
       }, 1000);
     }
   }, [matched, cards, moves, onGameComplete, players]);
 
-  // Calculate grid columns based on difficulty and screen size
   const getGridCols = () => {
     if (isMobile) {
       return difficulty === 'easy' ? 3 : 4;
@@ -182,17 +157,14 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
     }
   };
 
-  // Get current player
   const activePlayer = players.find(p => p.id === currentPlayer) || players[0];
   
-  // Calculate match progress percentage
   const progressPercentage = matched.length > 0 
     ? (matched.length / cards.length) * 100 
     : 0;
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      {/* Player turn indicator with animation */}
       <AnimatePresence>
         {showTurnAnimation && (
           <motion.div 
@@ -215,9 +187,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
         )}
       </AnimatePresence>
 
-      {/* Game stats and player information */}
       <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Player stats */}
         <Card className="bg-black/5 backdrop-blur-sm border-white/20 shadow-lg">
           <CardContent className="p-4">
             <div className="flex justify-between items-center">
@@ -241,7 +211,6 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
           </CardContent>
         </Card>
         
-        {/* Game progress */}
         <Card className="bg-black/5 backdrop-blur-sm border-white/20 shadow-lg">
           <CardContent className="p-4">
             <div className="flex justify-between items-center mb-2">
@@ -255,7 +224,6 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
         </Card>
       </div>
       
-      {/* Active player indicator */}
       <motion.div 
         className={`mb-4 text-center text-lg font-bold text-${activePlayer.color}`}
         initial={{ opacity: 0, y: -10 }}
@@ -268,7 +236,6 @@ const GameBoard: React.FC<GameBoardProps> = ({ difficulty, onGameComplete }) => 
         </div>
       </motion.div>
       
-      {/* Game board */}
       <motion.div 
         className="w-full overflow-hidden rounded-xl bg-black/5 backdrop-blur-md p-3 md:p-4 border border-white/10 shadow-xl"
         initial={{ opacity: 0, y: 20 }}
