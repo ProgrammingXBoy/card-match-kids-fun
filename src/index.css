@@ -92,6 +92,7 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
@@ -118,6 +119,34 @@
   .game-card-back {
     transform: rotateY(180deg);
   }
+
+  /* Futuristic UI Elements */
+  .futuristic-border {
+    @apply relative border border-white/20 rounded-xl overflow-hidden;
+  }
+  
+  .futuristic-border::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-50;
+    background-size: 200% 200%;
+    animation: border-flow 3s ease infinite;
+  }
+  
+  .futuristic-glow {
+    @apply relative;
+    box-shadow: 0 0 15px rgba(74, 157, 255, 0.3), 
+                0 0 30px rgba(155, 114, 207, 0.2);
+  }
+  
+  .player-1-active {
+    @apply border-l-4 border-game-red transition-all duration-300;
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.4);
+  }
+  
+  .player-2-active {
+    @apply border-l-4 border-game-blue transition-all duration-300;
+    box-shadow: 0 0 10px rgba(74, 157, 255, 0.4);
+  }
 }
 
 @layer utilities {
@@ -129,4 +158,92 @@
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
+  
+  .glass-effect {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+}
+
+@keyframes border-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.bg-game-red {
+  background-color: #FF6B6B;
+}
+
+.bg-game-blue {
+  background-color: #4A9DFF;
+}
+
+.bg-game-green {
+  background-color: #6BCB77;
+}
+
+.bg-game-purple {
+  background-color: #9B72CF;
+}
+
+.bg-game-pink {
+  background-color: #FF9EAA;
+}
+
+.bg-game-yellow {
+  background-color: #FFD93D;
+}
+
+.text-game-red {
+  color: #FF6B6B;
+}
+
+.text-game-blue {
+  color: #4A9DFF;
+}
+
+.text-game-green {
+  color: #6BCB77;
+}
+
+.text-game-purple {
+  color: #9B72CF;
+}
+
+.text-game-pink {
+  color: #FF9EAA;
+}
+
+.text-game-yellow {
+  color: #FFD93D;
+}
+
+.border-game-red {
+  border-color: #FF6B6B;
+}
+
+.border-game-blue {
+  border-color: #4A9DFF;
+}
+
+.border-game-green {
+  border-color: #6BCB77;
+}
+
+.border-game-purple {
+  border-color: #9B72CF;
+}
+
+.border-game-pink {
+  border-color: #FF9EAA;
+}
+
+.border-game-yellow {
+  border-color: #FFD93D;
 }

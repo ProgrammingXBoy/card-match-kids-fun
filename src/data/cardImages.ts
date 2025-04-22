@@ -6,6 +6,13 @@ export type CardType = {
   matched: boolean;
 };
 
+export type Player = {
+  id: 1 | 2;
+  name: string;
+  color: string;
+  score: number;
+};
+
 export const cardPairs = [
   { name: 'dog', emoji: '🐶' },
   { name: 'cat', emoji: '🐱' },
@@ -24,3 +31,8 @@ export const cardPairs = [
   { name: 'pig', emoji: '🐷' },
   { name: 'elephant', emoji: '🐘' },
 ];
+
+export const PLAYER_COLORS = {
+  1: 'game-red',   // Player 1 color
+  2: 'game-blue',  // Player 2 color
+};

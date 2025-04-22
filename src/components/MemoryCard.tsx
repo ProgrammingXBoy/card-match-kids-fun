@@ -28,7 +28,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
   return (
     <div 
       className={cn(
-        "game-card",
+        "game-card w-full h-full",
         isFlipped && "flipped",
         card.matched && "opacity-70"
       )}
@@ -43,15 +43,15 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
         {/* Card Back (Pattern) */}
         <div 
           className={cn(
-            "game-card-front flex items-center justify-center",
-            `bg-${cardBackColor} border-4 border-white shadow-md`
+            "game-card-front flex items-center justify-center rounded-xl",
+            `bg-${cardBackColor} border-4 border-white shadow-lg`
           )}
         >
-          <div className="text-white text-5xl">?</div>
+          <div className="text-white text-5xl font-bold">?</div>
         </div>
         
         {/* Card Front (Animal) */}
-        <div className="game-card-back bg-white border-4 border-game-yellow flex items-center justify-center shadow-md">
+        <div className="game-card-back bg-white rounded-xl border-4 border-game-yellow flex items-center justify-center shadow-lg">
           <span className="text-6xl">{card.emoji}</span>
         </div>
       </motion.div>
